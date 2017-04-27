@@ -51,8 +51,8 @@ namespace HarianCisitu
                 Console.WriteLine("");
             }
             Console.WriteLine("");
-            BM kmp = new SearchAlgorithm.BM();
-            News[] found = kmp.SearchBM("kan", program);
+            RegexC kmp = new SearchAlgorithm.RegexC();
+            News[] found = kmp.SearchRegex("Gubernur", program);
             int i = 0;
             while (found[i] != null)
             {

@@ -3,21 +3,31 @@ using System;
 using System.Text.RegularExpressions;
 using HarianCisitu;
 
+
 namespace SearchAlgorithm
 {
-    /*class Regex
+    class RegexC
     {
-        public static void RegexCheck(String input, String pattern)
+        public News[] SearchRegex(String pattern, NewsList newslist)
         {
-            Match m = Regex.Match(input, pattern, RegexOptions.IgnoreCase);
-            if (m.Success)
+            News[] foundNews = new News[newslist.Size];
+            int j = 0;
+            for (int i = 0; i < newslist.Size; i++)
             {
-                Console.WriteLine("Found '{0}' at position {1}.", m.Value, m.Index);
+                bool titleFound = Regex.IsMatch(newslist.NewsIdx(i).Title, pattern);
+                bool descFound = Regex.IsMatch(newslist.NewsIdx(i).Desc, pattern);
+                if (titleFound || descFound)
+                {
+                    foundNews[j] = newslist.NewsIdx(i);
+                    j++;
+                }
             }
+            return foundNews;
         }
 
-    }*/
+    }
 
+    #region KMP
     class KMP
     {
         public static int[] computerFail(String pattern)
@@ -105,6 +115,8 @@ namespace SearchAlgorithm
             return foundNews;
         }
     }
+    #endregion
+    #region BM
     class BM
     {
         public News[] SearchBM(String S, NewsList newslist)
@@ -130,6 +142,7 @@ namespace SearchAlgorithm
             }
             return newsout;
         }
+
         public static int bmMatch(String text, String pattern)
         {
             int[] last = buildLast(pattern);
@@ -184,4 +197,5 @@ namespace SearchAlgorithm
             return last;
         }
     }
+    #endregion
 }
