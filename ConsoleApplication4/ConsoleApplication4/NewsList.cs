@@ -45,10 +45,13 @@ namespace HarianCisitu
             WebClient W = new WebClient();
             string page = W.DownloadString(url);
             int idx = KMP.kmpMatch(page, "detikdetailtext");
+            if (idx < 0) return "isi berita tidak ditemukan";
             page = page.Substring(idx);
             idx = KMP.kmpMatch(page, "<!-- POLONG");
+            if (idx < 0) return "isi berita tidak ditemukan";
             page = page.Substring(0, idx);
             idx = KMP.kmpMatch(page, "</p>") + 4;
+            if (idx < 0) return "isi berita tidak ditemukan";
             page = page.Substring(idx);
             idx = KMP.kmpMatch(page, "<br />");
             while (idx != -1)
@@ -60,6 +63,7 @@ namespace HarianCisitu
                 idx = KMP.kmpMatch(page, "<br />");
             }
             idx = KMP.kmpMatch(page, "<br/>");
+            if (idx < 0) return "isi berita tidak ditemukan";
             page = page.Substring(0, idx);
             
             return page;
@@ -70,10 +74,13 @@ namespace HarianCisitu
             WebClient W = new WebClient();
             string page = W.DownloadString(url);
             int idx = BM.bmMatch(page, "detikdetailtext");
+            if (idx < 0) return "isi berita tidak ditemukan";
             page = page.Substring(idx);
             idx = BM.bmMatch(page, "<!-- POLONG");
+            if (idx < 0) return "isi berita tidak ditemukan";
             page = page.Substring(0, idx);
             idx = BM.bmMatch(page, "</p>") + 4;
+            if (idx < 0) return "isi berita tidak ditemukan";
             page = page.Substring(idx);
             idx = BM.bmMatch(page, "<br />");
             while (idx != -1)
@@ -85,6 +92,7 @@ namespace HarianCisitu
                 idx = BM.bmMatch(page, "<br />");
             }
             idx = BM.bmMatch(page, "<br/>");
+            if (idx < 0) return "isi berita tidak ditemukan";
             page = page.Substring(0, idx);
 
             return page;
@@ -95,10 +103,13 @@ namespace HarianCisitu
             WebClient W = new WebClient();
             string page = W.DownloadString(url);
             int idx = RegexC.regexMatch(page, "detikdetailtext");
+            if (idx < 0) return "isi berita tidak ditemukan";
             page = page.Substring(idx);
             idx = RegexC.regexMatch(page, "<!-- POLONG");
+            if (idx < 0) return "isi berita tidak ditemukan";
             page = page.Substring(0, idx);
             idx = RegexC.regexMatch(page, "</p>") + 4;
+            if (idx < 0) return "isi berita tidak ditemukan";
             page = page.Substring(idx);
             idx = RegexC.regexMatch(page, "<br />");
             while (idx != -1)
@@ -110,6 +121,7 @@ namespace HarianCisitu
                 idx = RegexC.regexMatch(page, "<br />");
             }
             idx = RegexC.regexMatch(page, "<br/>");
+            if (idx < 0) return "isi berita tidak ditemukan";
             page = page.Substring(0, idx);
 
             return page;
@@ -120,12 +132,16 @@ namespace HarianCisitu
             WebClient W = new WebClient();
             string page = W.DownloadString(url);
             int idx = KMP.kmpMatch(page, "666666") + 6;
+            if (idx < 0) return "isi berita tidak ditemukan";
             page = page.Substring(idx);
             idx = KMP.kmpMatch(page, "666666") + 6;
+            if (idx < 0) return "isi berita tidak ditemukan";
             page = page.Substring(idx);
             idx = KMP.kmpMatch(page, "</span>") + 10;
+            if (idx < 0) return "isi berita tidak ditemukan";
             page = page.Substring(idx);
             idx = KMP.kmpMatch(page, "<!-- end artikel");
+            if (idx < 0) return "isi berita tidak ditemukan";
             page = page.Substring(0, idx);
             idx = KMP.kmpMatch(page, "<br />");
             while(idx != -1)
@@ -177,12 +193,16 @@ namespace HarianCisitu
             WebClient W = new WebClient();
             string page = W.DownloadString(url);
             int idx = BM.bmMatch(page, "666666") + 6;
+            if (idx < 0) return "isi berita tidak ditemukan";
             page = page.Substring(idx);
             idx = BM.bmMatch(page, "666666") + 6;
+            if (idx < 0) return "isi berita tidak ditemukan";
             page = page.Substring(idx);
             idx = BM.bmMatch(page, "</span>") + 10;
+            if (idx < 0) return "isi berita tidak ditemukan";
             page = page.Substring(idx);
             idx = BM.bmMatch(page, "<!-- end artikel");
+            if (idx < 0) return "isi berita tidak ditemukan";
             page = page.Substring(0, idx);
             idx = BM.bmMatch(page, "<br />");
             while (idx != -1)
@@ -233,12 +253,16 @@ namespace HarianCisitu
             WebClient W = new WebClient();
             string page = W.DownloadString(url);
             int idx = RegexC.regexMatch(page, "666666") + 6;
+            if (idx < 0) return "isi berita tidak ditemukan";
             page = page.Substring(idx);
             idx = RegexC.regexMatch(page, "666666") + 6;
+            if (idx < 0) return "isi berita tidak ditemukan";
             page = page.Substring(idx);
             idx = RegexC.regexMatch(page, "</span>") + 10;
+            if (idx < 0) return "isi berita tidak ditemukan";
             page = page.Substring(idx);
             idx = RegexC.regexMatch(page, "<!-- end artikel");
+            if (idx < 0) return "isi berita tidak ditemukan";
             page = page.Substring(0, idx);
             idx = RegexC.regexMatch(page, "<br />");
             while (idx != -1)
@@ -289,8 +313,10 @@ namespace HarianCisitu
             WebClient W = new WebClient();
             string page = W.DownloadString(url);
             int idx = KMP.kmpMatch(page, "content_news") + 20;
+            if (idx < 0) return "isi berita tidak ditemukan";
             page = page.Substring(idx);
             idx = KMP.kmpMatch(page, "mt10") - 10;
+            if (idx < 0) return "isi berita tidak ditemukan";
             page = page.Substring(0,idx);
             idx = KMP.kmpMatch(page, "<br>");
             while (idx != -1)
@@ -308,8 +334,10 @@ namespace HarianCisitu
             WebClient W = new WebClient();
             string page = W.DownloadString(url);
             int idx = BM.bmMatch(page, "content_news") + 20;
+            if (idx < 0) return "isi berita tidak ditemukan";
             page = page.Substring(idx);
             idx = BM.bmMatch(page, "mt10") - 10;
+            if (idx < 0) return "isi berita tidak ditemukan";
             page = page.Substring(0, idx);
             idx = BM.bmMatch(page, "<br>");
             while (idx != -1)
@@ -327,8 +355,10 @@ namespace HarianCisitu
             WebClient W = new WebClient();
             string page = W.DownloadString(url);
             int idx = RegexC.regexMatch(page, "content_news") + 20;
+            if (idx < 0 ) return "isi berita tidak ditemukan";
             page = page.Substring(idx);
             idx = RegexC.regexMatch(page, "mt10") - 10;
+            if (idx < 0 ) return "isi berita tidak ditemukan";
             page = page.Substring(0, idx);
             idx = RegexC.regexMatch(page, "<br>");
             while (idx != -1)
@@ -346,12 +376,16 @@ namespace HarianCisitu
             WebClient W = new WebClient();
             string page = W.DownloadString(url);
             int idx = KMP.kmpMatch(page, "article-content");
+            if (idx < 0) return "isi berita tidak ditemukan";
             page = page.Substring(idx);
             idx = KMP.kmpMatch(page, "description");
+            if (idx < 0) return "isi berita tidak ditemukan";
             page = page.Substring(idx);
             idx = KMP.kmpMatch(page, "<p>")+3;
+            if (idx < 0) return "isi berita tidak ditemukan";
             page = page.Substring(idx);
             idx = KMP.kmpMatch(page, "</span>");
+            if (idx < 0) return "isi berita tidak ditemukan";
             page = page.Substring(0,idx);
             idx = KMP.kmpMatch(page, "<p>");
             while (idx != -1)
@@ -394,12 +428,16 @@ namespace HarianCisitu
             WebClient W = new WebClient();
             string page = W.DownloadString(url);
             int idx = BM.bmMatch(page, "article-content");
+            if (idx < 0) return "isi berita tidak ditemukan";
             page = page.Substring(idx);
             idx = BM.bmMatch(page, "description");
+            if (idx < 0) return "isi berita tidak ditemukan";
             page = page.Substring(idx);
             idx = BM.bmMatch(page, "<p>") + 3;
+            if (idx < 0) return "isi berita tidak ditemukan";
             page = page.Substring(idx);
             idx = BM.bmMatch(page, "</span>");
+            if (idx < 0) return "isi berita tidak ditemukan";
             page = page.Substring(0, idx);
             idx = BM.bmMatch(page, "<p>");
             while (idx != -1)
@@ -442,12 +480,16 @@ namespace HarianCisitu
             WebClient W = new WebClient();
             string page = W.DownloadString(url);
             int idx = RegexC.regexMatch(page, "article-content");
+            if (idx < 0) return "isi berita tidak ditemukan";
             page = page.Substring(idx);
             idx = RegexC.regexMatch(page, "description");
+            if (idx < 0) return "isi berita tidak ditemukan";
             page = page.Substring(idx);
             idx = RegexC.regexMatch(page, "<p>") + 3;
+            if (idx < 0) return "isi berita tidak ditemukan";
             page = page.Substring(idx);
             idx = RegexC.regexMatch(page, "</span>");
+            if (idx < 0) return "isi berita tidak ditemukan";
             page = page.Substring(0, idx);
             idx = RegexC.regexMatch(page, "<p>");
             while (idx != -1)
@@ -553,13 +595,13 @@ namespace HarianCisitu
             Debug.WriteLine("tralalala");
             NewsList program = new HarianCisitu.NewsList();
             Console.WriteLine("Ping1");
-            string l = program.ParseRssFile("http://rss.vivanews.com/get/all");
+           // string l = program.ParseRssFile("http://rss.vivanews.com/get/all");
             Console.WriteLine("Ping2");
-            l = program.ParseRssFile("http://rss.detik.com/index.php/detikcom");
+            string l = program.ParseRssFile("http://rss.detik.com/index.php/detikcom");
             Console.WriteLine("Ping3");
-            l = program.ParseRssFile("http://tempo.co/rss/terkini");
+            //l = program.ParseRssFile("http://tempo.co/rss/terkini");
             Console.WriteLine("Ping4");
-            l = program.ParseRssFile("http://www.antaranews.com/rss/terkini");
+            //l = program.ParseRssFile("http://www.antaranews.com/rss/terkini");
             Console.WriteLine("Ping5");
 
             for (int k = 0; k < program.trueSize; k++)
