@@ -5,8 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
-using System;
 using System.Text.RegularExpressions;
+using WindowsFormsApplication1;
 
 namespace HarianCisitu
 {
@@ -77,6 +77,29 @@ namespace HarianCisitu
             // Return the string that contain the RSS items
             return rssContent.ToString();
         }
+        public News[] SearchBM(String S)
+        {
+            int contain = 0;
+            News[] newsout = new News[trueSize];
+            for(int i = 0; i < trueSize; i++)
+            {
+                Boolean included = false;
+                if(bmMatc.bmMatch(list[i].Title,S) != -1)
+                {
+                    included = true;
+                }
+                else if (bmMatc.bmMatch(list[i].Desc, S) != -1)
+                {
+                    included = true;
+                }
+                if (included)
+                {
+                    newsout[contain] = list[i];
+                    contain++;
+                }
+            }
+            return newsout;
+        }
     }
     class News
     {
@@ -142,4 +165,5 @@ namespace HarianCisitu
             }
         }
     }
+
 }
