@@ -6,37 +6,67 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Text.RegularExpressions;
-using WindowsFormsApplication1;
+using SearchAlgorithm;
 
 namespace HarianCisitu
 {
     class NewsList
     {
-        public News[] list;
-        private int size;
-        public int trueSize;
+        private News[] list;
+        private const int DEF_SIZE = 500;
+        private int trueSize;
+
+        public News NewsIdx(int idx)
+        {
+            return list[idx];
+        }
+        public News[] List
+        {
+            get
+            {
+                return this.list;
+            }
+        }
+
+        public int Size
+        {
+            get
+            {
+                return this.trueSize;
+            }
+        }
 
         static void Main(string[] args)
         {
             Debug.WriteLine("tralalala");
             NewsList program = new HarianCisitu.NewsList();
-            string l = program.ParseRssFile("http://www.antaranews.com/rss/terkini");
+            string l = program.ParseRssFile("http://rss.vivanews.com/get/all");
             
-            for (int i = 0; i < program.trueSize; i++)
+            for (int k = 0; k < program.trueSize; k++)
             {
-                Console.WriteLine(program.list[i].Title);
-                Console.WriteLine(program.list[i].Link);
-                Console.WriteLine(program.list[i].Desc);
-                Console.WriteLine(program.list[i].Date);
+                Console.WriteLine(program.list[k].Title);
+                Console.WriteLine(program.list[k].Link);
+                Console.WriteLine(program.list[k].Desc);
+                Console.WriteLine(program.list[k].Date);
                 Console.WriteLine("");
+            }
+            Console.WriteLine("");
+            BM kmp = new SearchAlgorithm.BM();
+            News[] found = kmp.SearchBM("kan", program);
+            int i = 0;
+            while (found[i] != null)
+            {
+                Console.WriteLine(found[i].Title);
+                Console.WriteLine(found[i].Desc);
+                Console.WriteLine("");
+                i++;
             }
             Console.ReadKey();
 
         }
         private string ParseRssFile(string path)
         {
-            size = 500;
-            list = new News[500];
+            list = new News[DEF_SIZE];
             int i = 0;
             XmlDocument rssXmlDoc = new XmlDocument();
 
@@ -76,29 +106,6 @@ namespace HarianCisitu
 
             // Return the string that contain the RSS items
             return rssContent.ToString();
-        }
-        public News[] SearchBM(String S)
-        {
-            int contain = 0;
-            News[] newsout = new News[trueSize];
-            for(int i = 0; i < trueSize; i++)
-            {
-                Boolean included = false;
-                if(bmMatc.bmMatch(list[i].Title,S) != -1)
-                {
-                    included = true;
-                }
-                else if (bmMatc.bmMatch(list[i].Desc, S) != -1)
-                {
-                    included = true;
-                }
-                if (included)
-                {
-                    newsout[contain] = list[i];
-                    contain++;
-                }
-            }
-            return newsout;
         }
     }
     class News
@@ -165,5 +172,4 @@ namespace HarianCisitu
             }
         }
     }
-
 }
