@@ -77,46 +77,6 @@ namespace HarianCisitu
             // Return the string that contain the RSS items
             return rssContent.ToString();
         }
-        private string ParseRssFile2()
-        {
-            size = 100;
-            list = new News[100];
-            int i = 0;
-            XmlDocument rssXmlDoc = new XmlDocument();
-
-            // Load the RSS file from the RSS URL
-            rssXmlDoc.Load("http://rss.vivanews.com/get/all");
-
-            // Parse the Items in the RSS file
-            XmlNodeList rssNodes = rssXmlDoc.SelectNodes("rss/channel/item");
-
-            StringBuilder rssContent = new StringBuilder();
-
-            // Iterate through the items in the RSS file
-            foreach (XmlNode rssNode in rssNodes)
-            {
-                Debug.WriteLine("");
-                XmlNode rssSubNode = rssNode.SelectSingleNode("title");
-                string title = rssSubNode != null ? rssSubNode.InnerText : "";
-
-                rssSubNode = rssNode.SelectSingleNode("link");
-                string link = rssSubNode != null ? rssSubNode.InnerText : "";
-
-                rssSubNode = rssNode.SelectSingleNode("description");
-                string description = rssSubNode != null ? rssSubNode.InnerText : "";
-
-                rssSubNode = rssNode.SelectSingleNode("pubDate");
-                string date = rssSubNode != null ? rssSubNode.InnerText : "";
-
-                list[i] = new HarianCisitu.News(title, link, description, date);
-                i++;
-                rssContent.Append("&lt;a href='" + link + "'>" + title + "&lt;/a>&lt;br>" + description);
-            }
-            trueSize = i;
-
-            // Return the string that contain the RSS items
-            return rssContent.ToString();
-        }
     }
     class News
     {
