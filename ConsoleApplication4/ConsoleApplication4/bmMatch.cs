@@ -79,6 +79,7 @@ namespace WindowsFormsApplication1
             return last;
         }
 
+        /*
         public static void Main(String [] args)
         {
             String l = "aku punya anjing kecil";
@@ -99,5 +100,6 @@ namespace WindowsFormsApplication1
             }
             Console.ReadKey();
         }
+        */
     }
 }

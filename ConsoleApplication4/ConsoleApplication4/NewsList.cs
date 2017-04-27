@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Text.RegularExpressions;
 using SearchAlgorithm;
+using mshtml;
+//using System.Windows.Forms;
+using HtmlAgilityPack;
+using System.Net;
 
 namespace HarianCisitu
 {
@@ -36,12 +40,528 @@ namespace HarianCisitu
             }
         }
 
+        public static String parseDetikKMP(string url)
+        {
+            WebClient W = new WebClient();
+            string page = W.DownloadString(url);
+            int idx = KMP.kmpMatch(page, "detikdetailtext");
+            page = page.Substring(idx);
+            idx = KMP.kmpMatch(page, "<!-- POLONG");
+            page = page.Substring(0, idx);
+            idx = KMP.kmpMatch(page, "</p>") + 4;
+            page = page.Substring(idx);
+            idx = KMP.kmpMatch(page, "<br />");
+            while (idx != -1)
+            {
+                string front, end;
+                front = page.Substring(0, idx);
+                end = page.Substring(idx + 6);
+                page = front + end;
+                idx = KMP.kmpMatch(page, "<br />");
+            }
+            idx = KMP.kmpMatch(page, "<br/>");
+            page = page.Substring(0, idx);
+            
+            return page;
+        }
+
+        public static String parseDetikBM(string url)
+        {
+            WebClient W = new WebClient();
+            string page = W.DownloadString(url);
+            int idx = BM.bmMatch(page, "detikdetailtext");
+            page = page.Substring(idx);
+            idx = BM.bmMatch(page, "<!-- POLONG");
+            page = page.Substring(0, idx);
+            idx = BM.bmMatch(page, "</p>") + 4;
+            page = page.Substring(idx);
+            idx = BM.bmMatch(page, "<br />");
+            while (idx != -1)
+            {
+                string front, end;
+                front = page.Substring(0, idx);
+                end = page.Substring(idx + 6);
+                page = front + end;
+                idx = BM.bmMatch(page, "<br />");
+            }
+            idx = BM.bmMatch(page, "<br/>");
+            page = page.Substring(0, idx);
+
+            return page;
+        }
+
+        public static String parseDetikRegex(string url)
+        {
+            WebClient W = new WebClient();
+            string page = W.DownloadString(url);
+            int idx = RegexC.regexMatch(page, "detikdetailtext");
+            page = page.Substring(idx);
+            idx = RegexC.regexMatch(page, "<!-- POLONG");
+            page = page.Substring(0, idx);
+            idx = RegexC.regexMatch(page, "</p>") + 4;
+            page = page.Substring(idx);
+            idx = RegexC.regexMatch(page, "<br />");
+            while (idx != -1)
+            {
+                string front, end;
+                front = page.Substring(0, idx);
+                end = page.Substring(idx + 6);
+                page = front + end;
+                idx = RegexC.regexMatch(page, "<br />");
+            }
+            idx = RegexC.regexMatch(page, "<br/>");
+            page = page.Substring(0, idx);
+
+            return page;
+        }
+
+        public static String parseTempoKMP(string url)
+        {
+            WebClient W = new WebClient();
+            string page = W.DownloadString(url);
+            int idx = KMP.kmpMatch(page, "666666") + 6;
+            page = page.Substring(idx);
+            idx = KMP.kmpMatch(page, "666666") + 6;
+            page = page.Substring(idx);
+            idx = KMP.kmpMatch(page, "</span>") + 10;
+            page = page.Substring(idx);
+            idx = KMP.kmpMatch(page, "<!-- end artikel");
+            page = page.Substring(0, idx);
+            idx = KMP.kmpMatch(page, "<br />");
+            while(idx != -1)
+            {
+                string front = page.Substring(0, idx);
+                string end = page.Substring(idx+6);
+                page = front + end;
+                idx = KMP.kmpMatch(page, "<br />");
+            }
+            idx = KMP.kmpMatch(page, "<em>");
+            while (idx != -1)
+            {
+                string front = page.Substring(0, idx);
+                string end = page.Substring(idx + 4);
+                page = front + end;
+                idx = KMP.kmpMatch(page, "<em>");
+            }
+            idx = KMP.kmpMatch(page, "</em>");
+            while (idx != -1)
+            {
+                string front = page.Substring(0, idx);
+                string end = page.Substring(idx + 5);
+                page = front + end;
+                idx = KMP.kmpMatch(page, "</em>");
+            }
+            idx = KMP.kmpMatch(page, "</a>");
+            while (idx != -1)
+            {
+                string front = page.Substring(0, idx);
+                string end = page.Substring(idx + 4);
+                page = front + end;
+                idx = KMP.kmpMatch(page, "</a>");
+            }
+            idx = KMP.kmpMatch(page, "</p>");
+            while (idx != -1)
+            {
+                string front = page.Substring(0, idx);
+                string end = page.Substring(idx + 4);
+                page = front + end;
+                idx = KMP.kmpMatch(page, "</p>");
+            }
+
+
+            return page;
+        }
+
+        public static String parseTempoBM(string url)
+        {
+            WebClient W = new WebClient();
+            string page = W.DownloadString(url);
+            int idx = BM.bmMatch(page, "666666") + 6;
+            page = page.Substring(idx);
+            idx = BM.bmMatch(page, "666666") + 6;
+            page = page.Substring(idx);
+            idx = BM.bmMatch(page, "</span>") + 10;
+            page = page.Substring(idx);
+            idx = BM.bmMatch(page, "<!-- end artikel");
+            page = page.Substring(0, idx);
+            idx = BM.bmMatch(page, "<br />");
+            while (idx != -1)
+            {
+                string front = page.Substring(0, idx);
+                string end = page.Substring(idx + 6);
+                page = front + end;
+                idx = BM.bmMatch(page, "<br />");
+            }
+            idx = BM.bmMatch(page, "<em>");
+            while (idx != -1)
+            {
+                string front = page.Substring(0, idx);
+                string end = page.Substring(idx + 4);
+                page = front + end;
+                idx = BM.bmMatch(page, "<em>");
+            }
+            idx = BM.bmMatch(page, "</em>");
+            while (idx != -1)
+            {
+                string front = page.Substring(0, idx);
+                string end = page.Substring(idx + 5);
+                page = front + end;
+                idx = BM.bmMatch(page, "</em>");
+            }
+            idx = BM.bmMatch(page, "</a>");
+            while (idx != -1)
+            {
+                string front = page.Substring(0, idx);
+                string end = page.Substring(idx + 4);
+                page = front + end;
+                idx = BM.bmMatch(page, "</a>");
+            }
+            idx = BM.bmMatch(page, "</p>");
+            while (idx != -1)
+            {
+                string front = page.Substring(0, idx);
+                string end = page.Substring(idx + 4);
+                page = front + end;
+                idx = BM.bmMatch(page, "</p>");
+            }
+
+            return page;
+        }
+
+        public static String parseTempoRegex(string url)
+        {
+            WebClient W = new WebClient();
+            string page = W.DownloadString(url);
+            int idx = RegexC.regexMatch(page, "666666") + 6;
+            page = page.Substring(idx);
+            idx = RegexC.regexMatch(page, "666666") + 6;
+            page = page.Substring(idx);
+            idx = RegexC.regexMatch(page, "</span>") + 10;
+            page = page.Substring(idx);
+            idx = RegexC.regexMatch(page, "<!-- end artikel");
+            page = page.Substring(0, idx);
+            idx = RegexC.regexMatch(page, "<br />");
+            while (idx != -1)
+            {
+                string front = page.Substring(0, idx);
+                string end = page.Substring(idx + 6);
+                page = front + end;
+                idx = RegexC.regexMatch(page, "<br />");
+            }
+            idx = RegexC.regexMatch(page, "<em>");
+            while (idx != -1)
+            {
+                string front = page.Substring(0, idx);
+                string end = page.Substring(idx + 4);
+                page = front + end;
+                idx = RegexC.regexMatch(page, "<em>");
+            }
+            idx = RegexC.regexMatch(page, "</em>");
+            while (idx != -1)
+            {
+                string front = page.Substring(0, idx);
+                string end = page.Substring(idx + 5);
+                page = front + end;
+                idx = RegexC.regexMatch(page, "</em>");
+            }
+            idx = RegexC.regexMatch(page, "</a>");
+            while (idx != -1)
+            {
+                string front = page.Substring(0, idx);
+                string end = page.Substring(idx + 4);
+                page = front + end;
+                idx = RegexC.regexMatch(page, "</a>");
+            }
+            idx = RegexC.regexMatch(page, "</p>");
+            while (idx != -1)
+            {
+                string front = page.Substring(0, idx);
+                string end = page.Substring(idx + 4);
+                page = front + end;
+                idx = RegexC.regexMatch(page, "</p>");
+            }
+
+            return page;
+        }
+
+        public static string parseAntaraKMP(string url)
+        {
+            WebClient W = new WebClient();
+            string page = W.DownloadString(url);
+            int idx = KMP.kmpMatch(page, "content_news") + 20;
+            page = page.Substring(idx);
+            idx = KMP.kmpMatch(page, "mt10") - 10;
+            page = page.Substring(0,idx);
+            idx = KMP.kmpMatch(page, "<br>");
+            while (idx != -1)
+            {
+                string front = page.Substring(0, idx);
+                string end = page.Substring(idx + 4);
+                page = front + end;
+                idx = KMP.kmpMatch(page, "<br>");
+            }
+            return page;
+        }
+
+        public static string parseAntaraBM(string url)
+        {
+            WebClient W = new WebClient();
+            string page = W.DownloadString(url);
+            int idx = BM.bmMatch(page, "content_news") + 20;
+            page = page.Substring(idx);
+            idx = BM.bmMatch(page, "mt10") - 10;
+            page = page.Substring(0, idx);
+            idx = BM.bmMatch(page, "<br>");
+            while (idx != -1)
+            {
+                string front = page.Substring(0, idx);
+                string end = page.Substring(idx + 4);
+                page = front + end;
+                idx = BM.bmMatch(page, "<br>");
+            }
+            return page;
+        }
+
+        public static string parseAntaraRegex(string url)
+        {
+            WebClient W = new WebClient();
+            string page = W.DownloadString(url);
+            int idx = RegexC.regexMatch(page, "content_news") + 20;
+            page = page.Substring(idx);
+            idx = RegexC.regexMatch(page, "mt10") - 10;
+            page = page.Substring(0, idx);
+            idx = RegexC.regexMatch(page, "<br>");
+            while (idx != -1)
+            {
+                string front = page.Substring(0, idx);
+                string end = page.Substring(idx + 4);
+                page = front + end;
+                idx = RegexC.regexMatch(page, "<br>");
+            }
+            return page;
+        }
+
+        public static string parseVivaKMP(string url)
+        {
+            WebClient W = new WebClient();
+            string page = W.DownloadString(url);
+            int idx = KMP.kmpMatch(page, "article-content");
+            page = page.Substring(idx);
+            idx = KMP.kmpMatch(page, "description");
+            page = page.Substring(idx);
+            idx = KMP.kmpMatch(page, "<p>")+3;
+            page = page.Substring(idx);
+            idx = KMP.kmpMatch(page, "</span>");
+            page = page.Substring(0,idx);
+            idx = KMP.kmpMatch(page, "<p>");
+            while (idx != -1)
+            {
+                string front = page.Substring(0, idx);
+                string end = page.Substring(idx + 3);
+                page = front + end;
+                idx = KMP.kmpMatch(page, "<p>");
+            }
+            idx = KMP.kmpMatch(page, "</p>");
+            while (idx != -1)
+            {
+                string front = page.Substring(0, idx);
+                string end = page.Substring(idx + 4);
+                page = front + end;
+                idx = KMP.kmpMatch(page, "</p>");
+            }
+            idx = KMP.kmpMatch(page, "<em>");
+            while (idx != -1)
+            {
+                string front = page.Substring(0, idx);
+                string end = page.Substring(idx + 4);
+                page = front + end;
+                idx = KMP.kmpMatch(page, "<em>");
+            }
+            idx = KMP.kmpMatch(page, "</em>");
+            while (idx != -1)
+            {
+                string front = page.Substring(0, idx);
+                string end = page.Substring(idx + 5);
+                page = front + end;
+                idx = KMP.kmpMatch(page, "</em>");
+            }
+
+            return page;
+        }
+
+        public static string parseVivaBM(string url)
+        {
+            WebClient W = new WebClient();
+            string page = W.DownloadString(url);
+            int idx = BM.bmMatch(page, "article-content");
+            page = page.Substring(idx);
+            idx = BM.bmMatch(page, "description");
+            page = page.Substring(idx);
+            idx = BM.bmMatch(page, "<p>") + 3;
+            page = page.Substring(idx);
+            idx = BM.bmMatch(page, "</span>");
+            page = page.Substring(0, idx);
+            idx = BM.bmMatch(page, "<p>");
+            while (idx != -1)
+            {
+                string front = page.Substring(0, idx);
+                string end = page.Substring(idx + 3);
+                page = front + end;
+                idx = BM.bmMatch(page, "<p>");
+            }
+            idx = BM.bmMatch(page, "</p>");
+            while (idx != -1)
+            {
+                string front = page.Substring(0, idx);
+                string end = page.Substring(idx + 4);
+                page = front + end;
+                idx = BM.bmMatch(page, "</p>");
+            }
+            idx = BM.bmMatch(page, "<em>");
+            while (idx != -1)
+            {
+                string front = page.Substring(0, idx);
+                string end = page.Substring(idx + 4);
+                page = front + end;
+                idx = BM.bmMatch(page, "<em>");
+            }
+            idx = BM.bmMatch(page, "</em>");
+            while (idx != -1)
+            {
+                string front = page.Substring(0, idx);
+                string end = page.Substring(idx + 5);
+                page = front + end;
+                idx = BM.bmMatch(page, "</em>");
+            }
+
+            return page;
+        }
+
+        public static string parseVivaRegex(string url)
+        {
+            WebClient W = new WebClient();
+            string page = W.DownloadString(url);
+            int idx = RegexC.regexMatch(page, "article-content");
+            page = page.Substring(idx);
+            idx = RegexC.regexMatch(page, "description");
+            page = page.Substring(idx);
+            idx = RegexC.regexMatch(page, "<p>") + 3;
+            page = page.Substring(idx);
+            idx = RegexC.regexMatch(page, "</span>");
+            page = page.Substring(0, idx);
+            idx = RegexC.regexMatch(page, "<p>");
+            while (idx != -1)
+            {
+                string front = page.Substring(0, idx);
+                string end = page.Substring(idx + 3);
+                page = front + end;
+                idx = RegexC.regexMatch(page, "<p>");
+            }
+            idx = RegexC.regexMatch(page, "</p>");
+            while (idx != -1)
+            {
+                string front = page.Substring(0, idx);
+                string end = page.Substring(idx + 4);
+                page = front + end;
+                idx = RegexC.regexMatch(page, "</p>");
+            }
+            idx = RegexC.regexMatch(page, "<em>");
+            while (idx != -1)
+            {
+                string front = page.Substring(0, idx);
+                string end = page.Substring(idx + 4);
+                page = front + end;
+                idx = RegexC.regexMatch(page, "<em>");
+            }
+            idx = RegexC.regexMatch(page, "</em>");
+            while (idx != -1)
+            {
+                string front = page.Substring(0, idx);
+                string end = page.Substring(idx + 5);
+                page = front + end;
+                idx = RegexC.regexMatch(page, "</em>");
+            }
+
+            return page;
+        }
+
+        public static string parseHTML(string url, int method)
+        {
+            switch (method)
+            {
+                case 0:
+                    if (KMP.kmpMatch(url, "detik.com") != -1)
+                    {
+                        return parseDetikKMP(url);
+                    }
+                    else if (KMP.kmpMatch(url, "tempo.co") != -1)
+                    {
+                        return parseTempoKMP(url);
+                    }
+                    else if (KMP.kmpMatch(url, "viva") != -1)
+                    {
+                        return parseVivaKMP(url);
+                    }
+                    else if (KMP.kmpMatch(url, "antara") != -1)
+                    {
+                        return parseAntaraKMP(url);
+                    }
+                    break;
+                case 1:
+                    if (BM.bmMatch(url, "detik.com") != -1)
+                    {
+                        return parseDetikBM(url);
+                    }
+                    else if (BM.bmMatch(url, "tempo.co") != -1)
+                    {
+                        return parseTempoBM(url);
+                    }
+                    else if (BM.bmMatch(url, "viva") != -1)
+                    {
+                        return parseVivaBM(url);
+                    }
+                    else if (BM.bmMatch(url, "antara") != -1)
+                    {
+                        return parseAntaraBM(url);
+                    }
+                    break;
+                case 2:
+                    if (RegexC.regexMatch(url, "detik.com") != -1)
+                    {
+                        return parseDetikRegex(url);
+                    }
+                    else if (RegexC.regexMatch(url, "tempo.co") != -1)
+                    {
+                        return parseTempoRegex(url);
+                    }
+                    else if (RegexC.regexMatch(url, "viva") != -1)
+                    {
+                        return parseVivaRegex(url);
+                    }
+                    else if (RegexC.regexMatch(url, "antara") != -1)
+                    {
+                        return parseAntaraRegex(url);
+                    }
+                    break;
+            }
+            return "Salah URL";
+        }
+
         static void Main(string[] args)
         {
+           
             Debug.WriteLine("tralalala");
             NewsList program = new HarianCisitu.NewsList();
+            Console.WriteLine("Ping1");
             string l = program.ParseRssFile("http://rss.vivanews.com/get/all");
-            
+            Console.WriteLine("Ping2");
+            l = program.ParseRssFile("http://rss.detik.com/index.php/detikcom");
+            Console.WriteLine("Ping3");
+            l = program.ParseRssFile("http://tempo.co/rss/terkini");
+            Console.WriteLine("Ping4");
+            l = program.ParseRssFile("http://www.antaranews.com/rss/terkini");
+            Console.WriteLine("Ping5");
+
             for (int k = 0; k < program.trueSize; k++)
             {
                 Console.WriteLine(program.list[k].Title);
@@ -64,6 +584,7 @@ namespace HarianCisitu
             Console.ReadKey();
 
         }
+
         private string ParseRssFile(string path)
         {
             list = new News[DEF_SIZE];
@@ -81,6 +602,8 @@ namespace HarianCisitu
             // Iterate through the items in the RSS file
             foreach (XmlNode rssNode in rssNodes)
             {
+                Console.WriteLine("Node");
+
                 Debug.WriteLine("");
                 XmlNode rssSubNode = rssNode.SelectSingleNode("title");
                 string title = rssSubNode != null ? rssSubNode.InnerText : "";
@@ -90,9 +613,10 @@ namespace HarianCisitu
                 string link = rssSubNode != null ? rssSubNode.InnerText : "";
                 Debug.WriteLine(link);
 
-                rssSubNode = rssNode.SelectSingleNode("description");
-                string description = rssSubNode != null ? rssSubNode.InnerText : "";
-                Debug.WriteLine(description);
+                // rssSubNode = rssNode.SelectSingleNode("description");
+                //string description = rssSubNode != null ? rssSubNode.InnerText : "";
+                //Debug.WriteLine(description);
+                string description = parseHTML(link, 0);
 
                 rssSubNode = rssNode.SelectSingleNode("pubDate");
                 string date = rssSubNode != null ? rssSubNode.InnerText : "";

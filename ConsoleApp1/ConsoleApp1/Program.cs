@@ -1,4 +1,5 @@
 ﻿// KMP
+/*
 using System;
 using System.Text.RegularExpressions;
 namespace StringMatching
@@ -90,15 +91,19 @@ namespace StringMatching
 
     class Main
     {
+    */
+        /*
         ///////////////////////////////////////////////////////MAIN////////////////////////////////////////////////////////////////
         static void Main(String[] args)
         {
             char command;
+            */
             /*if(args.Length != 2)
             {
                 Console.WriteLine("Usage: java KmpSearch <text> <pattern>");
                 Environment.Exit(0);
             }*/
+            /*
             Console.WriteLine("Masukan Perintah");
             Console.ReadLine(command);
             String text = "Halo Apakabar semua kami Tipeh Cisco Lazu hehehe";
@@ -122,8 +127,8 @@ namespace StringMatching
                     }
                     end;
                 case '2':
-                    Regex test2 = new Regex
-                    String pattern = "\bCisco\w*\b";
+                    Regex test2 = new Regex();
+                    String pattern = @"\bCisco\w*\b";
                     Console.WriteLine("Pattern: " + pattern);
                     test2.Regex(input, pattern);
                     end;
@@ -133,7 +138,9 @@ namespace StringMatching
             Console.WriteLine("Press Any Key to exit");
             Console.ReadLine();
         }
+        
     }
         
     
 }
+*/

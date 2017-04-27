@@ -1,5 +1,4 @@
 ﻿using System;
-using System;
 using System.Text.RegularExpressions;
 using HarianCisitu;
 
@@ -25,7 +24,20 @@ namespace SearchAlgorithm
             return foundNews;
         }
 
+        public static int regexMatch(String text, String pattern) {
+            Match match = Regex.Match(text, pattern);
+            if (match.Success)
+            {
+                return match.Index;
+            }
+            else
+            {
+                return -1;
+            }
+        }
+
     }
+
 
     #region KMP
     class KMP
