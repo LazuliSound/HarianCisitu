@@ -5,6 +5,7 @@ using HarianCisitu;
 
 namespace SearchAlgorithm
 {
+    #region Regex
     class RegexC
     {
         public News[] SearchRegex(String pattern, NewsList newslist)
@@ -14,17 +15,40 @@ namespace SearchAlgorithm
             for (int i = 0; i < newslist.Size; i++)
             {
                 bool titleFound = Regex.IsMatch(newslist.NewsIdx(i).Title, pattern);
-                bool descFound = Regex.IsMatch(newslist.NewsIdx(i).Desc, pattern);
-                if (titleFound || descFound)
+                Match descFounded = Regex.Match(newslist.NewsIdx(i).Desc, pattern);
+                int descFound = descFounded.Index;
+                if (titleFound || descFound != 0)
                 {
                     foundNews[j] = newslist.NewsIdx(i);
+                    foundNews[j].Desc = newslist.NewsIdx(i).Desc;
+                    if (descFound != -1)
+                    {
+                        char[] temp = new char[200];
+                        int idx = descFound;
+                        while (idx > 0 && foundNews[j].Desc[idx] != '.' && foundNews[j].Desc[idx] != '>')
+                        {
+                            idx--;
+                        }
+                        idx++;
+                        int p = 0;
+                        while (idx < newslist.NewsIdx(i).Desc.Length && (foundNews[j].Desc[idx] != '.'
+                            || foundNews[j].Desc[idx] != '<') && p < 200)
+                        {
+                            temp[p] = foundNews[j].Desc[idx];
+                            p++;
+                            idx++;
+                        }
+                        string temp1 = new string(temp, 0, p);
+                        foundNews[j].Desc = temp1;
+                    }
                     j++;
                 }
             }
             return foundNews;
         }
 
-        public static int regexMatch(String text, String pattern) {
+        public static int regexMatch(String text, String pattern)
+        {
             Match match = Regex.Match(text, pattern);
             if (match.Success)
             {
@@ -37,8 +61,7 @@ namespace SearchAlgorithm
         }
 
     }
-
-
+    #endregion
     #region KMP
     class KMP
     {
@@ -121,6 +144,26 @@ namespace SearchAlgorithm
                 if (titleFound != -1 || descFound != -1)
                 {
                     foundNews[j] = newslist.NewsIdx(i);
+                    if (descFound != -1)
+                    {
+                        char[] temp = new char[200];
+                        int idx = descFound;
+                        while (idx > 0 && foundNews[j].Desc[idx] != '.' && foundNews[j].Desc[idx] != '>')
+                        {
+                            idx--;
+                        }
+                        idx++;
+                        int p = 0;
+                        while (idx < newslist.NewsIdx(i).Desc.Length && (foundNews[j].Desc[idx] != '.'
+                            || foundNews[j].Desc[idx] != '<') && p < 200)
+                        {
+                            temp[p] = foundNews[j].Desc[idx];
+                            p++;
+                            idx++;
+                        }
+                        string temp1 = new string(temp, 0, p);
+                        foundNews[j].Desc = temp1;
+                    }
                     j++;
                 }
             }
@@ -138,17 +181,36 @@ namespace SearchAlgorithm
             for (int i = 0; i < newslist.Size; i++)
             {
                 Boolean included = false;
+                int idx = bmMatch(newslist.NewsIdx(i).Desc, S);
                 if (bmMatch(newslist.NewsIdx(i).Title, S) != -1)
                 {
                     included = true;
                 }
-                else if (bmMatch(newslist.NewsIdx(i).Desc, S) != -1)
+                else if (idx != -1)
                 {
                     included = true;
                 }
                 if (included)
                 {
                     newsout[contain] = newslist.NewsIdx(i);
+                    if (idx != -1)
+                    {
+                        char[] temp = new char[200];
+                        while (idx > 0 && newsout[contain].Desc[idx] != '.' && newsout[contain].Desc[idx] != '>')
+                        {
+                            idx--;
+                        }
+                        idx++;
+                        int p = 0;
+                        while (idx < newslist.NewsIdx(i).Desc.Length && (newsout[contain].Desc[idx] != '.'
+                            || newsout[contain].Desc[idx] != '<') && p < 200)
+                        {
+                            temp[p] = newsout[contain].Desc[idx];
+                            p++;
+                            idx++;
+                        }
+                        newsout[contain].Desc = new string(temp, 0, p);
+                    }
                     contain++;
                 }
             }
